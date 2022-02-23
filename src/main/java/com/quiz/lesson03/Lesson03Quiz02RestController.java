@@ -2,6 +2,7 @@ package com.quiz.lesson03;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quiz.lesson03.bo.RealEstateBO;
@@ -28,8 +29,9 @@ public class Lesson03Quiz02RestController {
 	}
 	
 	@RequestMapping("/2")
-	public String quiz02_2() {
-		int row = realEstateBO.addRealEstateAsfield("썅떼빌리버 오피스텔 814호", 45, "월세", 100000, 120);
+	public String quiz02_2(
+			@RequestParam("realtor_id") int realtorId) {
+		int row = realEstateBO.addRealEstateAsfield(realtorId, "썅떼빌리버 오피스텔 814호", 45, "월세", 100000, 120);
 		return "입력성공: " + row;
 	}
 }
