@@ -13,6 +13,7 @@ public class RealEstateBO {
 
 	@Autowired
 	private RealEstateDAO realEstateDAO;
+	
 	public RealEstate getRealEstateById(int id) {
 		return realEstateDAO.selectRealEstateById(id);
 	}
