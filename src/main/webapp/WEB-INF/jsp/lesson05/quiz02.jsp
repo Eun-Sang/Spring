@@ -15,7 +15,8 @@
 </head>
 <body>
 	<h1>HOT 5</h1>
-	<table class="table">
+	<div class="container">
+	<table class="table table-center">
 		<thead>
 			<tr>
 				<th>순위</th>
@@ -25,15 +26,15 @@
 		<tbody>
 			<c:forEach var="song" items="${musicRanking}" varStatus="status">
 				<tr>
-					<th>${status.count}</th>
-					<th>${status.index}</th>
+					<td>${status.count}</td>
+					<td>${song}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	
 	<h1>멤버십</h1>
-	<table class="table">
+	<table class="table table-center">
 		<thead>
 			<tr>
 				<th>이름</th>
@@ -45,34 +46,35 @@
 		<tbody>
 			<c:forEach var="member" items="${membership}" varStatus="status">
 				<tr>
-				<th>${membership.name}</th>
-				<th>${membership.phoneNumber}</th>
-				<th>
+				<td>${member.name}</td>
+				<td>${member.phoneNumber}</td>
+				<td>
 					<c:choose>
-					<c:when test="${membership.grade eq VIP}">
-						<div class="text-danger">${membership.grade}</div>
+					<c:when test="${member.grade eq 'VIP'}">
+						<div class="text-danger">${member.grade}</div>
 					</c:when>
-					<c:when test="${membership.grade eq GOLD}">
-						<div class="text-warning">${membership.grade}</div>
+					<c:when test="${member.grade eq 'GOLD'}">
+						<div class="text-warning">${member.grade}</div>
 					</c:when>
 					<c:otherwise>
-					${membership.grade}
+						${member.grade}
 					</c:otherwise>
 					</c:choose>
-				</th>
-				<th>
+				</td>
+				<td>
 					<c:choose>
-					<c:when test="${membership.point > 5000}">
-						<div class="tesxt-primary">${membership.point}</div>
+					<c:when test="${member.point >= 5000}">
+						<span class="tesxt-primary">${member.point}</span>
 					</c:when>
 					<c:otherwise>
-						${membership.point}
+						${member.point}P
 					</c:otherwise>
 					</c:choose>
-				</th>
+				</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	</div>
 </body>
 </html>
