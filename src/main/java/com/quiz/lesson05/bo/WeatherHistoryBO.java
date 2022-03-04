@@ -1,10 +1,13 @@
 package com.quiz.lesson05.bo;
 
-import java.util.Date;
+import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.quiz.lesson05.dao.WeatherHistoryDAO;
+import com.quiz.lesson05.model.WeatherHistory;
 
 @Service
 public class WeatherHistoryBO {
@@ -12,13 +15,15 @@ public class WeatherHistoryBO {
 	@Autowired
 	private WeatherHistoryDAO WeatherHistoryDAO;
 	
+	public List<WeatherHistory> getWeatherHistoryList() {
+		return WeatherHistoryDAO.selectWeatherHistoryList();
+	}
+	
+
 	public void addWeatherHistory(
-			Date date, 
-			String weather, 
-			float temperatures,
-			float precipitation,
-			String microDust,
-			float windSpeed) {
-		WeatherHistoryDAO
+			String date,String weather,String microDust,double temperatures,
+			double precipitation,double windSpeed
+			) {
+		WeatherHistoryDAO.insertWeatherHistory();
 	}
 }

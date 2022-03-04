@@ -7,8 +7,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.quiz.lesson05.bo.WeatherHistoryBO;
 import com.quiz.lesson05.model.Member;
 
 @Controller
@@ -181,8 +184,34 @@ public class Lesson05Controller {
 		return "/lesson05/quiz04";
 	}
 	
-	@RequestMapping("/lesson05/quiz04")
-	public String quiz05() {
-		return "/lesson05/quiz04";
+	@RequestMapping("/lesson05/weather_history")
+	public String quiz05(Model model) {
+		
+		// select DB
+		
+		// add model
+		
+		return "/lesson05/weather_history";
+	}
+	
+	@RequestMapping("/lesson05/add_weather_view")
+	public String addWeatherView() {
+		return "/lesson05/add_weather_history";
+	}
+	
+	@PostMapping("/lesson05/add_weather")
+	public String addWeather(
+			@RequestParam("date") String date,
+			@RequestParam("weather") String weather,
+			@RequestParam("microDust") String microDust,
+			@RequestParam("temperatures") double temperatures,
+			@RequestParam("precipitation") double precipitation,
+			@RequestParam("windSpeed") double windSpeed) {
+	
+		// TODO add data (db insert)
+		
+		
+		// redirect -> 날씨 정보 리스트 화면
+		return "redirect:/lesson05/weather_history";
 	}
 }

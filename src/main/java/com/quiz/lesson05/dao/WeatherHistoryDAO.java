@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WeatherHistoryDAO {
+	public List<WeatherHistory> selectWeatherHistoryList;
 	
 	public void interWeatherHistory(
 			@Param("date") Date date,
@@ -16,4 +17,11 @@ public interface WeatherHistoryDAO {
 			@Param("microDust") String microDust,
 			@Param("windSpeed") float windSpeed);
 			
+	public void addWeatherHistory(
+			@Param("date") String date,
+			@Param("weather")String weather,
+			@Param("microDust")String microDust,
+			@Param("temperatures")double temperatures,
+			@Param("precipitation")double precipitation,
+			@Param("windSpeed")double windSpeed);
 }
