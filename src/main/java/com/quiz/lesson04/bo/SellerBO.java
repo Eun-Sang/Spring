@@ -14,7 +14,7 @@ public class SellerBO {
   
   public void addSeller(String nickname, String profileImgUrl, double temperature) { 
 	  
-	  SellerDAO
+	
 	  
   } 
   
