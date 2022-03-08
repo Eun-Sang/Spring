@@ -18,43 +18,75 @@
 <body>
 	<div class="container">
 		<h1>즐겨찾기 추가</h1>
-			<label for="name" class="w-25">사이트명: <input type="text" class="form-control" name="name" id="name"></label><br>
-			<label for="url" class="w-50">사이트 주소: <input type="text" class="form-control" name="url" id="url"></label>
-			
-			<div class="mt-3">
-				<input type="button" id="addBtn" class="btn btn-success" value="추가">
+			<div class="form-group">
+				<label for="name" class="w-25">사이트명: <input type="text" id="site" class="form-control" name="name"></label>
 			</div>
+			<div class="form-group d-flex">
+				<label for="url" class="w-50">사이트 주소: <input type="text" id="address" class="form-control" name="url"></label>
+				<button type="button" class="btn btn-info" id="urlCheckBtn">중복확인</button>
+			</div>
+			<small id="urlStatusArea"></small>
+				<button type="button" id="addFavoriteBtn" class="btn btn-success btn-block">추가</button>
+			
 	</div>
 <script>
-${(document).ready(function()
-		$('#addBtn').on('click', function(e) {
+$(document).ready(function() {
+		
 			
 			// validation
-			let name = $('input[name=name]').val().trim();
-			if (name == '') {
+			let site = $('#site').val().trim();
+			if (site.length < 1) {
 				alert("이름을 입력하세요");
 				return;
 			}
-			let url = $('#url').val().trim();
-			if (url == '') {
-				alert("url을 입력해주세요");
+			let address = $('#address').val().trim();
+			if (address == '') {
+				alert("주소를 입력해주세요");
 				return;
 			}
+			
+			if (address.startsWith("http://") == false && address.startsWith("https://") == false) {
+				alert("주소형식이 잘못 되었습니다.");
+				return;
+			}
+			
+			$('#addFavoriteBtn').on('click', function() {
+				// 초기화
+			
+				$('#urlStatusArea').empty();
+				if (address == '') {
+					$('#urlStatusArea').append('<span class="text-danger">주소가 비어있습니다.</span>');
+					return;
+				}
 			$.ajax({
 				//request
-				type:"post"
-				, url:"/lesson06/quiz01/add_favorite"
-				, data: {"name": name, "url": url}
+				type:"get"
+				, url: "lesson06/quiz02/is_duplication"
+				, data: {"address": address}
 				//response
-				,successL function(data) {
-					alert(data);
-					location.href="";
-				}
-				.complete: function(data) {
-					alert("완료");
+				, success: function(data) {
+					if (data.is_duplication) {
+						$('#urlStatusArea').append('<span class="text-danger">중복된 주소 입니다.</span>');
+					}
 				}
 				, error: function(e) {
-					alert("에러" + e);
+					alert("실패");
+				}
+			})	
+			
+			$.ajax({
+				//request
+				type:"post"	// 대소문자 구분 안 함
+				, url:"/lesson06/quiz01/add_favorite"	// 화면으로는 요청을 안 한다.(_view로 끝나지 않음)
+				, data: {"site": site, "address": address}
+				//response
+				,success: function(data) {	// url에서 return된 json String을 jquery ajax함수가 object로 변환해준다.
+					if (data.result == "success") {
+						location.href = "/lesson06/quiz01/favorite_list_view"
+					}
+				}
+				, error: function(e) {
+					alert(e);
 				}
 			})
 		});

@@ -3,24 +3,35 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.quiz.lesson06.dao.FavoriteDAO">
- 	<insert id="insertFavorite" parameterType="com.quiz.lesson06.model.Favorite">
+ 	<insert id="insertFavorite" parameterType="map">
 	INSERT INTO `favorite`
 	(
-			`id`
-			,`site`
-			,`address`
-			,`createdAt`
-			,`updatedAt`
+		`site`
+		,`address`
+		,`createdAt`
+		,`updatedAt`
 	)
 	VALUES
 	(
-		#{Id}
-		, #{site}
+		#{site}
 		, #{address}
 		, now{}
 		, now{}
 		
 	)
-	
 	</insert>
+	
+	<select id="selectfavoriteList" result="com.quiz.lesson06.model.favorite">
+	SELECT
+	(
+		`id`
+		`site`
+		,`address`
+		,`createdAt`
+		,`updatedAt`
+	)
+	FROM
+		`favorite`
+	</select>
+	
  </mapper>

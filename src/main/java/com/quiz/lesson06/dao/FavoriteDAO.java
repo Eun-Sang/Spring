@@ -9,11 +9,10 @@ import com.quiz.lesson06.model.Favorite;
 
 @Repository
 public interface FavoriteDAO {
-
-	public List<Favorite> selectFavoriteList;
-	
 	public void interFavorite(
 			@Param("site") String site,
 			@Param("address") String address);
+	
+	public List<Favorite> selectfavoriteList();
 	
 }
