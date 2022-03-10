@@ -26,6 +26,7 @@
 				<th>No.</th>
 				<th>이름</th>
 				<th>주소</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,12 +35,40 @@
 				<td>${favorite.id}</td>
 				<td>${favorite.site}</td>
 				<td>${favorite.address}</td>
+				<td><button type="button" class="deleteBtn btn btn-danger" data-favorite-id="${favorite.id}">삭제</button></td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>	
 	
+	<script>
+	$(document).ready(function() {
+		$('.deleteBtn').on('click', function() {
+			//태그: data-favorite-id		data뒤 부터는 이름을 지어준다.(카멜케이스xxx)
+			//스크립트: data("data-favorite-id")
+			let id = $(this).data("favorite-id");
+			
+			
+		$.ajax({
+			type:"post"
+			, url: "/lesson06/quiz02/delete_favorite_list"
+			, data: {"id": id}
+			, success: function(data) {
+				if (data.result == 'success') {
+					location.reload();
+				} else {
+					alert(data.errorMessage);
+				}
+				
+			}
+			, error: function(e) {
+				alert("URL 삭제가 실패하였습니다.");
+			}
+			});
+		});
+	});
 	
+	</script>
 		
 		
 		

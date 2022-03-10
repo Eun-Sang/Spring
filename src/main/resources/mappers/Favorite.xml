@@ -21,7 +21,7 @@
 	)
 	</insert>
 	
-	<select id="selectfavoriteList" result="com.quiz.lesson06.model.favorite">
+	<select id="selectfavoriteList" resultType="com.quiz.lesson06.model.favorite">
 	SELECT
 	(
 		`id`
@@ -34,4 +34,15 @@
 		`favorite`
 	</select>
 	
+	<select id="selectFavoriteByUrl" resultType="com.quiz.lesson06.model.favorite">
+	
+	</select>
+	
+	<delete id="deleteFavoriteById" parameterType="int">
+		DELETE
+		FROM
+			`favorite`
+		WHERE
+			`id` = #{id}
+	</delete>
  </mapper>

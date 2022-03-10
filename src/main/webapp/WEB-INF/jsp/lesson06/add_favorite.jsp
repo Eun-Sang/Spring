@@ -22,12 +22,15 @@
 				<label for="name" class="w-25">사이트명: <input type="text" id="site" class="form-control" name="name"></label>
 			</div>
 			<div class="form-group d-flex">
-				<label for="url" class="w-50">사이트 주소: <input type="text" id="address" class="form-control" name="url"></label>
-				<button type="button" class="btn btn-info" id="urlCheckBtn">중복확인</button>
-			</div>
-			<small id="urlStatusArea"></small>
+				<label for="url" class="w-50">사이트 주소: 
+					<div class="form-inline">
+					<input type="text" id="address" class="form-control col-10" name="url"></label>
+					<button type="button" class="btn btn-info" id="urlCheckBtn">중복확인</button>
+					</div>
+				</div>
+			<small id="duplicationText" class="text-danger d-none">중복된 URL 입니다.</small>
+			<small id="availableUrlText" class="text-success d-none">저장 가능한 URL 입니다.</small>
 				<button type="button" id="addFavoriteBtn" class="btn btn-success btn-block">추가</button>
-			
 	</div>
 <script>
 $(document).ready(function() {
@@ -72,22 +75,33 @@ $(document).ready(function() {
 				, error: function(e) {
 					alert("실패");
 				}
-			})	
+			});	
 			
-			$.ajax({
-				//request
-				type:"post"	// 대소문자 구분 안 함
-				, url:"/lesson06/quiz01/add_favorite"	// 화면으로는 요청을 안 한다.(_view로 끝나지 않음)
-				, data: {"site": site, "address": address}
-				//response
-				,success: function(data) {	// url에서 return된 json String을 jquery ajax함수가 object로 변환해준다.
-					if (data.result == "success") {
-						location.href = "/lesson06/quiz01/favorite_list_view"
+			//quiz02
+			
+			$('#urlCheckBtn').on('click', function() {
+				let url = $('#address').val().trim();
+				if (url == '') {
+					alert("검사할 URL을 입력 해주세요");
+					return;
+				}
+				
+				$.ajax({ 
+					type: "post"
+					, url: "/lesson06/quiz02/check_duplication_url"
+					, data: {"url": url}
+					, success: function(data) {
+						if (data.result) {		// 중복일 때
+							$('#duplicationText').removeClass('d-none');
+							$('#availableUrlText').addClass('d-none');
+						} else		// 중복이 아닐 때
+							$('#availableUrlText').removeClass('d-none');
+							$('#duplicationText').addClass('d-none');
 					}
-				}
-				, error: function(e) {
-					alert(e);
-				}
+					, error: function(e) {
+						alert("중복확인에 실패했습니다.");
+					}
+				});
 			})
 		});
 		)};
