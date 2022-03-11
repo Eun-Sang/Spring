@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,19 +49,57 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><button type="button" class="btn btn-danger">삭제</button></td>
-					</tr>
+					<c:forEach items="${bookingList}" var="booking">
+						<tr>
+							<td>${booking.name}</td>
+							<td><fmt:formatDate  value="${booking.date}" pattern="yyyy년-M월-d일" /></td>
+							<td>${booking.day}</td>
+							<td>${booking.headcount}</td>
+							<td>${booking.phoneNumber}</td>
+							<td>
+								<c:choose>
+									<c:when test="${booking.state eq `확정`}">
+										<span class="text-success">${booking.state}</span>
+									</c:when>
+									<c:when test="${booking.state eq `대기중`}">
+										<span class="text-info">${booking.state}</span>
+									</c:when>
+									<c:when test="${booking.state eq `취소`}">
+										<span class="text-danger">${booking.state}</span>
+									</c:when>
+								</c:choose>
+							</td>
+							<td>
+							<button type="button"  class="del-btn btn btn-danger" data-booking-id="${booking.id}">삭제</button></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 		<footer class="bg-primary">Copyright © marondal 2021</footer>
 	</div>
+	
+	<script>
+	
+	$(document).ready(function() {
+		$('.del-btn').on('click', function() {
+			let id = $(this).data("booking-id");
+			
+		$.ajax({
+			type:"DELETE"
+			, url: "/lesson06/quiz03/delete_booking"
+			, data: {"id": id}
+			, success: function(data) {
+				
+			}
+			, error: function(e) {
+				alert("예약삭제에 실패했습니다.");
+			}
+			
+			
+		});
+		});
+	});
+	</script>
 </body>
 </html>

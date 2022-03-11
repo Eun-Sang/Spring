@@ -43,46 +43,76 @@
 			</div>
 			<div class="form-group">
 			<label>숙박일수
-			<input type="text" id="days" class="form-control"></label>
+			<input type="text" id="day" class="form-control"></label>
 			</div>
 			<div class="form-group">
 			<label>숙박인원
-			<input type="text" id="person" class="form-control"></label>
+			<input type="text" id="headcount" class="form-control"></label>
 			</div>
 			<div class="form-group">
 			<label>전화번호
 			<input type="text" id="phoneNumber" class="form-control"></label>
 			</div>
-		<button type="button" class="btn btn-warning">예약하기</button>
+		<button type="button" id="reservationBtn" class="btn btn-warning">예약하기</button>
 		<footer>Copyright © marondal 2021</footer>
 	</div>
 	
 <script>
 	$(document).ready(function() {
-		let name = $('#name').val().trim();
+		$('input[name=date]').datepicker({
+			minDate:0
+			, dateFormat: "yy-mm-dd"
+		});
+		
+		$('#reservationBtn').on('click', function() {
+			let name = $('input[name=name]').val().trim();
+			let name = $('input[name=date]').val().trim();
+			let name = $('input[name=day]').val().trim();
+			let name = $('input[name=headcount]').val().trim();
+			let name = $('input[name=phoneNumber]').val().trim();
+
+		});
+		
+		
+		
+
 		if (name.length < 1) {
 			alert("이름을 입력하세요");
+			return;
 		}
 		
-		let date = $('#date').val().trim();
 		if (date == '') {
 			alert("예약날짜를 입력하세요");
+			return;
 		}
 		
-		let days = $('#days').val().trim();
+		
 		if (days.length < 1) {
 			alert("숙박일수를 입력하세요");
+			return;
 		}
-		let phoneNumber = $('#phoneNumber').val().trim();
+		
+		if (headcount.length < 1) {
+			alert("인원 수를 입력하세요");
+			return;
+		}
+		
 		if (phoneNumber == '') {
 			alert("전화번호를 입력하세요");
+			return;
 		}
 		
 		$.ajax ({
 			type:"post"
-			, url:"/lesson06/booking"
-			, data: {"name": name, "date": date, "days": days, "phoneNumber": phoneNumber}
-			, success: 
+			, url:"/lesson06/quiz03/add_booking"
+			, data: {"name": name, "date": date, "days": days, "headcount": headcount, "phoneNumber": phoneNumber}
+			, success: function(data) {
+				alert("예약 되었습니다.");
+				location.href=""
+			}
+			, error: function(e) {
+				alert("예약 실패");
+			}
 		});
 		
 		

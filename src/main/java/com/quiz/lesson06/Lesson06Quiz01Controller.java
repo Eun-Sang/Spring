@@ -48,6 +48,6 @@ public class Lesson06Quiz01Controller {
 		
 		// DB select
 		
-		return "lesson06/quiz01/favorite_list";
+		return "lesson06/favorite_list";
 	}
 }

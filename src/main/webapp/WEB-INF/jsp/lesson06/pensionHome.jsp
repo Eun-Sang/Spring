@@ -40,5 +40,13 @@
 		</div>
 		<footer class="bg-primary">Copyright © marondal 2021</footer>
 	</div>
+	
+	<script>
+	$(document).ready
+	
+	
+	</script>
+	
+	
 </body>
 </html>
